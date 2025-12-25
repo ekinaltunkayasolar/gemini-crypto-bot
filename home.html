@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Trader Pro | Yapay Zeka ile Otomatik Al-Sat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-body: #050511;
+            --bg-card: #0F1221;
+            --bg-card-hover: #161B33;
+            --primary: #2962FF;
+            --primary-glow: rgba(41, 98, 255, 0.4);
+            --accent-cyan: #00E5FF;
+            --text-white: #ffffff;
+            --text-gray: #B0B5C9;
+            --border: rgba(255, 255, 255, 0.08);
+            --input-bg: rgba(255,255,255,0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-white);
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 0%, rgba(41, 98, 255, 0.15), transparent 50%), radial-gradient(circle at 80% 60%, rgba(0, 229, 255, 0.05), transparent 30%);
+        }
+
+        a {
+            text-decoration: none;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        button {
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        /* --- NAVBAR --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            background: rgba(5, 5, 17, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-icon {
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+
+            .nav-links a {
+                color: var(--text-gray);
+                font-size: 0.95rem;
+                font-weight: 500;
+            }
+
+                .nav-links a:hover {
+                    color: var(--text-white);
+                }
+
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn-login {
+            background: transparent;
+            border: none;
+            color: var(--text-white);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+            .btn-login:hover {
+                color: var(--primary);
+            }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), #0039cb);
+            border: none;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px var(--primary-glow);
+            transition: 0.3s;
+        }
+
+            .btn-primary:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 25px var(--primary-glow);
+            }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            text-align: center;
+            padding: 160px 20px 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero-tag {
+            background: rgba(41, 98, 255, 0.1);
+            color: var(--accent-cyan);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+            border: 1px solid rgba(41, 98, 255, 0.2);
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            line-height: 1.1;
+            font-weight: 800;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .text-gradient {
+            background: linear-gradient(90deg, var(--accent-cyan), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-gray);
+            max-width: 700px;
+            margin: 0 auto 40px auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 60px;
+        }
+
+        /* MOCKUP */
+        .dashboard-mockup {
+            background: #0B0E17;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            max-width: 1000px;
+            margin: 0 auto;
+            box-shadow: 0 50px 100px -20px rgba(0,0,0,0.8), 0 0 50px -10px rgba(41, 98, 255, 0.2);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .mockup-header {
+            background: #151925;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .d-red {
+            background: #FF5F56;
+        }
+
+        .d-yellow {
+            background: #FFBD2E;
+        }
+
+        .d-green {
+            background: #27C93F;
+        }
+
+        .mockup-body {
+            padding: 40px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        .chart-placeholder {
+            height: 300px;
+            background: linear-gradient(180deg, rgba(41, 98, 255, 0.1), transparent);
+            border-radius: 8px;
+            border: 1px solid rgba(41, 98, 255, 0.2);
+            position: relative;
+        }
+
+        .chart-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300" preserveAspectRatio="none"><path d="M0,250 C150,250 150,100 300,100 C450,100 450,200 600,200 C750,200 750,50 1000,50 L1000,300 L0,300 Z" fill="rgba(41,98,255,0.1)" /><path d="M0,250 C150,250 150,100 300,100 C450,100 450,200 600,200 C750,200 750,50 1000,50" fill="none" stroke="%232962FF" stroke-width="3" /></svg>');
+            background-size: cover;
+        }
+
+        .side-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .stat-card {
+            background: #151925;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .floating-badge {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: #151925;
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: 1px solid #0ecb81;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* TICKER */
+        .ticker-wrap {
+            width: 100%;
+            overflow: hidden;
+            background: #0A0D18;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 15px 0;
+            margin-top: 60px;
+            white-space: nowrap;
+        }
+
+        .ticker {
+            display: inline-block;
+            animation: ticker 20s linear infinite;
+        }
+
+        .ticker-item {
+            display: inline-block;
+            padding: 0 30px;
+            font-weight: 600;
+            color: var(--text-gray);
+        }
+
+        .t-green {
+            color: #0ecb81;
+        }
+
+        .t-red {
+            color: #f6465d;
+        }
+
+        @keyframes ticker {
+            0% {
+                transform: translate3d(0, 0, 0);
+            }
+
+            100% {
+                transform: translate3d(-50%, 0, 0);
+            }
+        }
+
+        /* FEATURES */
+        .section {
+            padding: 100px 5%;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+            .section-header h2 {
+                font-size: 2.5rem;
+                margin-bottom: 15px;
+            }
+
+            .section-header p {
+                color: var(--text-gray);
+            }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: 0.3s;
+        }
+
+            .feature-card:hover {
+                transform: translateY(-5px);
+                background: var(--bg-card-hover);
+                border-color: var(--primary);
+            }
+
+        .f-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(41, 98, 255, 0.1);
+            color: var(--primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* STATS */
+        .stats-container {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 60px 0;
+            margin-top: 60px;
+        }
+
+        .stat-box {
+            text-align: center;
+            width: 100%;
+        }
+
+        .stat-num {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-white);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .stat-desc {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 40px 5%;
+            background: #02030a;
+            margin-top: 80px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .copy {
+            color: var(--text-gray);
+            font-size: 0.85rem;
+            margin-top: 10px;
+        }
+
+        /* --- MODAL (GİRİŞ/KAYIT) STYLES --- */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 450px;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            color: var(--text-gray);
+            cursor: pointer;
+        }
+
+        .tab-header {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 25px;
+        }
+
+        .tab-item {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            cursor: pointer;
+            color: var(--text-gray);
+            font-weight: 600;
+            border-bottom: 2px solid transparent;
+            transition: 0.3s;
+        }
+
+            .tab-item.active {
+                border-bottom: 2px solid var(--primary);
+                color: var(--primary);
+            }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: white;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+            .form-input:focus {
+                outline: none;
+                border-color: var(--primary);
+            }
+
+        .form-btn {
+            width: 100%;
+            margin-top: 10px;
+            padding: 12px;
+            font-size: 1rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media(max-width: 1024px) {
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media(max-width: 900px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .mockup-body {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-container {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">
+            <span class="logo-icon">⚡</span> AI Trader Pro
+        </div>
+        <div class="nav-links">
+            <a href="#features">Özellikler</a>
+            <a href="https://tr.tradingview.com/" target="_blank">Piyasa</a>
+        </div>
+        <div class="auth-buttons">
+            <button onclick="openModal('login')" class="btn-login">Giriş Yap</button>
+            <button onclick="openModal('register')" class="btn-primary">Kayıt Ol</button>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-tag">✨ V2.4 Yayında: Yeni AI Denetçisi Eklendi</div>
+        <h1>
+            <span class="text-gradient">Yapay Zeka ile Otomatik</span><br>
+            Daha Akıllı Yatırım Yapın
+        </h1>
+        <p>15 profesyonel indikatörü 7/24 analiz eden, piyasa rejimine göre strateji değiştiren kurumsal düzeyde bir bot deneyimi.</p>
+
+        <div class="hero-buttons">
+            <button onclick="openModal('register')" class="btn-primary" style="font-size:1.1rem; padding: 12px 30px;">Botu Başlat</button>
+        </div>
+
+        <div class="dashboard-mockup">
+            <div class="mockup-header">
+                <div class="dot d-red"></div><div class="dot d-yellow"></div><div class="dot d-green"></div>
+                <span style="font-size: 0.8rem; color: #555; margin-left: 10px;">dashboard.aitrader.io</span>
+            </div>
+            <div class="mockup-body">
+                <div class="chart-placeholder">
+                    <div class="floating-badge">
+                        <span style="font-size:1.2rem;">📈</span>
+                        <div>
+                            <div style="font-size:0.7rem; color:#888;">Toplam Kar</div>
+                            <div style="font-weight:bold; color:#0ecb81;">+$12,450.00</div>
+                        </div>
+                    </div>
+                    <div class="chart-line"></div>
+                </div>
+                <div class="side-panel">
+                    <div class="stat-card">
+                        <div style="color:#888; font-size:0.8rem;">Aktif Strateji</div>
+                        <div style="font-weight:bold; color:var(--primary);">LOW RISK</div>
+                    </div>
+                    <div class="stat-card">
+                        <div style="color:#888; font-size:0.8rem;">AI Güven Skoru</div>
+                        <div style="font-weight:bold; color:white;">85/100</div>
+                    </div>
+                    <div class="stat-card">
+                        <div style="color:#888; font-size:0.8rem;">24s Hacim</div>
+                        <div style="font-weight:bold; color:white;">$1.2M</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="ticker-wrap">
+        <div class="ticker">
+            <span class="ticker-item">BTC/USDT <span class="t-green">+2.4%</span></span>
+            <span class="ticker-item">ETH/USDT <span class="t-green">+1.8%</span></span>
+            <span class="ticker-item">SOL/USDT <span class="t-red">-0.5%</span></span>
+            <span class="ticker-item">BNB/USDT <span class="t-green">+0.2%</span></span>
+            <span class="ticker-item">AVAX/USDT <span class="t-green">+3.1%</span></span>
+            <span class="ticker-item">FET/USDT <span class="t-green">+5.4%</span></span>
+            <span class="ticker-item">BTC/USDT <span class="t-green">+2.4%</span></span>
+            <span class="ticker-item">ETH/USDT <span class="t-green">+1.8%</span></span>
+            <span class="ticker-item">SOL/USDT <span class="t-red">-0.5%</span></span>
+        </div>
+    </div>
+
+    <section class="section" id="features">
+        <div class="section-header">
+            <h2>Gelişmiş Özellikler</h2>
+            <p>Bireysel yatırımcılar için kurumsal kalitede araçlar.</p>
+        </div>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="f-icon">🤖</div>
+                <h3>Otomatik Al-Sat</h3>
+                <p>Parametrelerinizi belirleyin, risk profilinizi seçin ve algoritmanın 7/24 duygusuz işlem yapmasını izleyin.</p>
+            </div>
+            <div class="feature-card">
+                <div class="f-icon">📊</div>
+                <h3>Gelişmiş Analitik</h3>
+                <p>15 farklı indikatörden (RSI, MACD, OBV...) gelen verileri tek bir "Güven Skoru"nda birleştirir.</p>
+            </div>
+            <div class="feature-card">
+                <div class="f-icon">🛡️</div>
+                <h3>Dinamik Risk Yönetimi</h3>
+                <p>Sermayenizi korur. Piyasa volatilitesi arttığında stop-loss seviyelerini otomatik olarak ayarlar.</p>
+            </div>
+            <div class="feature-card">
+                <div class="f-icon">🧠</div>
+                <h3>AI Rejim Tespiti</h3>
+                <p>Piyasa Trend mi yoksa Yatay mı? Bot bunu anlar ve strateji stilini değiştirir.</p>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #0A0D18;">
+        <div class="section">
+            <div class="stats-container">
+                <div class="stat-box">
+                    <span class="stat-num">$2B+</span>
+                    <span class="stat-desc">İşlem Hacmi</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-num">50k+</span>
+                    <span class="stat-desc">Aktif Trader</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-num">99.9%</span>
+                    <span class="stat-desc">Uptime</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-num">24/7</span>
+                    <span class="stat-desc">Destek</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-logo">⚡ AI Trader Pro</div>
+        <div style="color: var(--text-gray); margin-bottom: 20px;">Dünyanın en gelişmiş yapay zeka destekli kripto ticaret platformu.</div>
+        <div class="copy">
+            &copy; 2025 AI Trader Pro Inc. Tüm hakları saklıdır.
+        </div>
+    </footer>
+
+    <div class="modal" id="authModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">×</span>
+
+            <div class="tab-header">
+                <div class="tab-item active" id="tab-login" onclick="switchTab('login')">Giriş Yap</div>
+                <div class="tab-item" id="tab-register" onclick="switchTab('register')">Kayıt Ol</div>
+            </div>
+
+            <div id="form-login">
+                <div class="form-group">
+                    <label class="form-label">Kullanıcı Adı</label>
+                    <input type="text" class="form-input" id="l-user">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Şifre</label>
+                    <input type="password" class="form-input" id="l-pass">
+                </div>
+                <button class="btn-primary form-btn" onclick="doLogin()">GİRİŞ YAP</button>
+            </div>
+
+            <div id="form-register" class="hidden">
+                <div class="form-group">
+                    <label class="form-label">Kullanıcı Adı Belirle</label>
+                    <input type="text" class="form-input" id="r-user">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Şifre Belirle</label>
+                    <input type="password" class="form-input" id="r-pass">
+                </div>
+                <button class="btn-primary form-btn" style="background:var(--accent-cyan); color:black;" onclick="doRegister()">KAYIT OL</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // MODAL FONKSİYONLARI
+        function openModal(type) {
+            document.getElementById('authModal').style.display = 'flex';
+            switchTab(type);
+        }
+
+        function closeModal() {
+            document.getElementById('authModal').style.display = 'none';
+        }
+
+        function switchTab(tab) {
+            const loginForm = document.getElementById('form-login');
+            const regForm = document.getElementById('form-register');
+            const tabLogin = document.getElementById('tab-login');
+            const tabReg = document.getElementById('tab-register');
+
+            if (tab === 'login') {
+                loginForm.classList.remove('hidden');
+                regForm.classList.add('hidden');
+                tabLogin.classList.add('active');
+                tabReg.classList.remove('active');
+            } else {
+                loginForm.classList.add('hidden');
+                regForm.classList.remove('hidden');
+                tabLogin.classList.remove('active');
+                tabReg.classList.add('active');
+            }
+        }
+
+        // AUTH REQUESTS
+        async function doRegister() {
+            const u = document.getElementById('r-user').value;
+            const p = document.getElementById('r-pass').value;
+            if (!u || !p) return alert("Alanları doldurun!");
+
+            try {
+                const res = await fetch('/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: u, password: p })
+                });
+                const data = await res.json();
+
+                if (res.ok) {
+                    alert("Kayıt Başarılı! Şimdi giriş yapılıyor...");
+                    // Otomatik giriş yapmayı dene
+                    await performLogin(u, p);
+                } else {
+                    alert(data.mesaj);
+                }
+            } catch (e) { console.error(e); alert("Hata oluştu"); }
+        }
+
+        async function doLogin() {
+            const u = document.getElementById('l-user').value;
+            const p = document.getElementById('l-pass').value;
+            await performLogin(u, p);
+        }
+
+        async function performLogin(u, p) {
+            try {
+                const res = await fetch('/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: u, password: p })
+                });
+                const data = await res.json();
+
+                if (!res.ok) {
+                    alert(data.mesaj);
+                } else {
+                    // LocalStorage'a kaydet
+                    localStorage.setItem("crypto_user", u);
+                    localStorage.setItem("crypto_settings", JSON.stringify(data.settings));
+
+                    // PANELE YÖNLENDİR
+                    window.location.href = '/panel';
+                }
+            } catch (e) { console.error(e); alert("Bağlantı hatası"); }
+        }
+
+        // Modal dışına tıklayınca kapatma
+        window.onclick = function (event) {
+            const modal = document.getElementById('authModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+
+</body>
+</html>

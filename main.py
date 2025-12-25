@@ -185,4 +185,11 @@ async def loop():
 @app.on_event("startup")
 async def start(): asyncio.create_task(loop())
 @app.get("/", response_class=HTMLResponse)
-def home(): return open("index.html", "r", encoding="utf-8").read()
+def landing_page():
+    # Siteye ilk girişte havalı tanıtım sayfasını aç
+    return open("home.html", "r", encoding="utf-8").read()
+
+@app.get("/panel", response_class=HTMLResponse)
+def dashboard():
+    # "/panel" adresine gidilince asıl bot ekranını aç
+    return open("index.html", "r", encoding="utf-8").read()
