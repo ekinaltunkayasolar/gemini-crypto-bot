@@ -1,89 +1,48 @@
-# ⚡ AI Trader Pro (V1.1)
+# ⚡ AI Trader Pro V2.4 - Yapay Zeka Destekli Kripto Botu
 
-**Yapay Zeka Destekli, Çoklu Stratejili ve Web Arayüzlü Kripto Ticaret Terminali**
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue) ![FastAPI](https://img.shields.io/badge/FastAPI-0.95%2B-green) ![AI](https://img.shields.io/badge/AI-Google%20Gemini-orange) ![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
-Bu proje, 7/24 piyasayı izleyen, teknik indikatörlere (RSI, Bollinger, MACD) göre otomatik al-sat kararı veren ve kullanıcısına Telegram üzerinden anlık bildirim gönderen profesyonel bir ticaret botudur.
-
-![Bot Dashboard](https://img.shields.io/badge/Status-Live-green) ![Python](https://img.shields.io/badge/Python-3.9+-blue) ![Binance](https://img.shields.io/badge/Integration-Binance-yellow)
+**AI Trader Pro**, Binance borsasında otomatik alım-satım yapan, gücünü Google Gemini 3 Flash yapay zeka modelinden alan gelişmiş bir ticaret botudur. Piyasa verilerini 15 farklı teknik indikatörle analiz eder, kullanıcının risk profiline göre karar verir ve işlemleri otomatik uygular.
 
 ---
 
-## 🚀 Öne Çıkan Özellikler
+## 📋 Proje Özeti
 
-* **🛡️ Çoklu Risk Yönetimi:** Piyasa koşullarına göre 3 farklı mod (Low, Medium, High Risk).
-* **🧠 Akıllı Karar Mekanizması:** Sadece fiyatı değil; trendi, hacmi ve volatiliteyi analiz eder.
-* **📱 Telegram Entegrasyonu:** Alım veya satım yapıldığı saniye cebinize bildirim gelir.
-* **📊 Backtest (Geçmiş Test) Motoru:** "Geçen ay bu botu kullansaydım ne kadar kazanırdım?" sorusunun cevabını verir.
-* **🖥️ Canlı Web Terminali:** TradingView grafikleri, anlık bakiye ve bot kararlarını içeren modern arayüz.
+Bu proje, geleneksel algoritmik botların aksine sadece "RSI 30'un altındaysa al" demez. Piyasa verilerini, trendleri, hacmi ve volatiliteyi bir bütün olarak **Yapay Zeka (LLM)** motoruna sunar.
 
----
-
-## ⚙️ Sistem Mimarisi
-
-Botun çalışma mantığı, karar verme süreçleri ve kullanıcı etkileşimi aşağıdaki şemada özetlenmiştir:
-
-![Sistem Algoritması](https://mermaid.ink/img/pako:eNp1kstuwyAQRX9FaNZWEchDvapS9aO6q4oLBxg1sHEwTlLlf--A80hZycW9MzB3OCAzsUQW4shfyucKNk5W0Pj40qgOngs2gjXew93ROb5cdUKJRtuTQefhjbPGa9bquILW_lird_3f_fYPmqf9CNYu179X--PuDvL8yesMvYEn8AEcwA6cwAIcwB5cQjsHa_BovWENPqEfwRam4AvMoIMluAQuLMASZv9gLfAZvYGpHz6E6T_YwCIUw1ws4Blm4w0m4w18AB9gB0c4wglOYGEDT7CHJ3iBK9zgBnewMISXUAwTWMA91HAPu3iAR3iCYmjhGV7gBb7gG77hB35hCT-hGObwAr8QwxJ-I4bfqOEPjPAPzPAHMfyJGP5CDH8jhn8Qw9-I4R_E8C9i-A8x_IkY_kIMe_gDL8tBjg?type=png)
+**Temel Özellikler:**
+* 🧠 **Yapay Zeka Karar Mekanizması:** Google Gemini API ile piyasa yorumlama.
+* 📊 **Gelişmiş Teknik Analiz:** RSI, MACD, Bollinger, EMA, ATR ve daha fazlası.
+* 💰 **Akıllı Bakiye Yönetimi:** Cüzdan bakiyesine göre işlem büyüklüğü belirleme.
+* ⚡ **Hızlı Web Arayüzü:** FastAPI ve Vanilla JS ile anlık veri takibi.
+* 🧪 **Backtest (Simülasyon) Modu:** Geçmiş verilerle strateji testi.
+* ☁️ **Bulut Uyumlu:** Render.com üzerinde 7/24 çalışmaya uygun.
 
 ---
 
-## 📈 Strateji Modları
+## 🛠️ Teknoloji Yığını ve Bağımlılıklar
 
-Bot, yatırımcının risk algısına göre 3 farklı karakterde çalışabilir:
+Proje aşağıdaki teknolojiler üzerine inşa edilmiştir:
 
-### 1. LOW RISK (Trend Pullback)
-* **Mantık:** "Trend dostundur."
-* **Giriş:** Fiyat yükseliş trendindeyken (EMA200 üstü) yaşanan kısa vadeli düşüşlerde (RSI < 45) alım yapar.
-* **Hedef:** Güvenli ve istikrarlı büyüme.
-
-### 2. MEDIUM RISK (Mean Reversion)
-* **Mantık:** "Fiyat her zaman ortalamaya döner."
-* **Giriş:** Fiyat Bollinger Alt Bandını delip tekrar içeri girdiğinde alım yapar.
-* **Hedef:** Yatay piyasalarda dalgalanmaları yakalamak.
-
-### 3. HIGH RISK (Volatility Breakout)
-* **Mantık:** "Sıkışan fiyat patlama yapar."
-* **Giriş:** Bollinger bantları daraldıktan sonra yukarı yönlü hacimli bir kırılım (Breakout) olduğunda girer.
-* **Hedef:** Sert yükselişleri yakalamak (Trailing Stop kullanır).
+* **Backend:** Python 3.10+, FastAPI, Uvicorn
+* **Veri & Borsa:** CCXT (Binance API), Pandas, Numpy
+* **Yapay Zeka:** Google Generative AI (Gemini 3 Flash)
+* **Frontend:** HTML5, CSS3 (Modern Dark UI), JavaScript (Fetch API)
+* **Araçlar:** Python-dotenv, Git
 
 ---
 
-## 🛠️ Kurulum ve Çalıştırma
+## 🚀 Kurulum ve Dağıtım (Deployment)
 
-Projeyi kendi bilgisayarınızda çalıştırmak için:
+### 1. Ön Hazırlıklar (Gereksinimler)
+* Bilgisayarınızda [Python](https://www.python.org/) yüklü olmalıdır.
+* [Binance](https://testnet.binance.vision/) Testnet API anahtarları.
+* [Google AI Studio](https://aistudio.google.com/) API anahtarı.
 
-1. **Repoyu İndirin:**
-    ```bash
-    git clone https://github.com/KULLANICI_ADINIZ/REPO_ADINIZ.git
-    cd crypto-bot
-    ```
+### 2. Yerel Kurulum (Local)
 
-2. **Gerekli Kütüphaneleri Yükleyin:**
-    ```bash
-    pip install -r requirements.txt
-    ```
+Projeyi bilgisayarınıza klonlayın ve klasöre gidin:
 
-3. **Botu Başlatın:**
-    ```bash
-    uvicorn main:app --reload
-    ```
-
-4. **Web Arayüzüne Girin:**
-    Tarayıcınızda `http://127.0.0.1:8000` adresine gidin.
-
----
-
-## 📲 Telegram Bildirimleri Kurulumu
-
-Botun size mesaj atması için:
-1. Telegram'da **@BotFather** ile yeni bir bot oluşturun ve `Token` alın.
-2. Kendi `Chat ID`nizi öğrenin.
-3. Web arayüzündeki **"Ayarlar"** butonuna basarak bu bilgileri girin.
-
----
-
-## ⚠️ Yasal Uyarı
-
-*Bu yazılım deneysel amaçlı geliştirilmiş bir algoritmik ticaret aracıdır. Geçmiş performans, gelecekteki sonuçların garantisi değildir. Kripto para piyasaları yüksek risk içerir. Yazar, bu yazılımın kullanımından doğabilecek maddi kayıplardan sorumlu tutulamaz.*
-
----
-*Developed by Ekin Altunkaya*
+```bash
+git clone [https://github.com/KULLANICI_ADINIZ/PROJE_ADINIZ.git](https://github.com/KULLANICI_ADINIZ/PROJE_ADINIZ.git)
+cd PROJE_ADINIZ
