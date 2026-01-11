@@ -1,8 +1,9 @@
 fastapi
 uvicorn
+ccxt
 pandas
 numpy
-python-binance
-pandas_ta
-requests
-
+python-dotenv
+google-genai
+pydantic
+supabase

@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Landing Page Teması Renkleri */
             --bg-body: #050511;
             --bg-card: #0F1221;
             --bg-input: rgba(255, 255, 255, 0.05);
@@ -17,7 +16,6 @@
             --text-white: #ffffff;
             --text-gray: #B0B5C9;
             --border: rgba(255, 255, 255, 0.08);
-            /* Durum Renkleri */
             --green: #0ecb81;
             --red: #f6465d;
             --yellow: #fcd535;
@@ -33,19 +31,17 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--bg-body);
             color: var(--text-white);
-            padding: 15px; /* Kenar boşluğu azaltıldı */
+            padding: 15px;
             background-image: radial-gradient(circle at 50% 0%, rgba(41, 98, 255, 0.1), transparent 50%), radial-gradient(circle at 80% 60%, rgba(0, 229, 255, 0.03), transparent 30%);
             min-height: 100vh;
         }
 
-        /* --- LAYOUT: TAM EKRAN --- */
         .container {
-            max-width: 100%; /* Tam genişlik */
+            max-width: 100%;
             margin: 0;
             padding: 0 10px;
         }
 
-        /* --- HEADER --- */
         header {
             display: flex;
             justify-content: space-between;
@@ -77,7 +73,6 @@
             align-items: center;
         }
 
-        /* Input & Button Styles */
         .symbol-inp {
             background: var(--bg-input);
             border: 1px solid var(--border);
@@ -153,7 +148,6 @@
             font-weight: 600;
         }
 
-        /* --- GRID (SOL KARTLAR + SAĞ GRAFİK) --- */
         .grid {
             display: grid;
             grid-template-columns: 400px 1fr;
@@ -172,7 +166,6 @@
             }
         }
 
-        /* --- KART TASARIMI --- */
         .card {
             background: var(--bg-card);
             padding: 25px;
@@ -187,7 +180,6 @@
                 border-color: rgba(41, 98, 255, 0.3);
             }
 
-        /* --- KART İÇERİKLERİ --- */
         .risk-bar-bg {
             width: 100%;
             height: 6px;
@@ -210,6 +202,25 @@
             border-radius: 8px;
             border-left: 4px solid var(--text-gray);
             margin-top: 15px;
+        }
+
+        .tag-container {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .ai-tag {
+            background: rgba(41, 98, 255, 0.15);
+            color: var(--accent-cyan);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .report-header {
@@ -252,7 +263,6 @@
             border-bottom: none;
         }
 
-        /* --- MODAL TASARIMI (LANDING PAGE İLE AYNI) --- */
         .modal {
             display: none;
             position: fixed;
@@ -278,7 +288,6 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
-        /* Modern Inputs inside Modal */
         .inp, .sel {
             width: 100%;
             padding: 14px 15px;
@@ -296,6 +305,11 @@
                 outline: none;
                 border-color: var(--primary);
                 background: rgba(255,255,255,0.05);
+            }
+
+            .sel option {
+                background-color: var(--bg-card);
+                color: white;
             }
 
         .save-btn {
@@ -399,7 +413,6 @@
                 fill: var(--primary);
             }
 
-        /* --- SETUP WARNING BAR (ALT BİLDİRİM ÇUBUĞU) --- */
         .setup-warning {
             position: fixed;
             bottom: 20px;
@@ -410,7 +423,7 @@
             color: var(--yellow);
             padding: 15px 30px;
             border-radius: 50px;
-            display: none; /* Başlangıçta gizli */
+            display: none;
             align-items: center;
             gap: 20px;
             z-index: 5000;
@@ -435,22 +448,18 @@
     </style>
 </head>
 <body>
-
     <div class="container">
         <header>
             <div class="logo"><span>⚡</span> AI Trader Pro</div>
-
             <div class="timers">
                 <div style="text-align:center"><span class="label">SİSTEM</span><span class="time-val" id="clock">00:00</span></div>
                 <div style="text-align:center"><span class="label">ANALİZ</span><span class="time-val" style="color:var(--primary)" id="countdown-display">10s</span></div>
             </div>
-
             <div class="header-controls">
                 <input type="text" id="header-symbol" class="symbol-inp" value="BTCUSDT" onchange="changeSymbol(this.value)" placeholder="Coin">
                 <button id="auth-btn" class="auth-btn" onclick="openAuthModal()">Giriş / Kayıt</button>
             </div>
         </header>
-
         <div class="grid">
             <div>
                 <div class="card">
@@ -458,7 +467,6 @@
                     <div id="active-strat-display" style="font-weight:800; color:var(--primary); font-size:1.4rem; margin-top:5px;">Yükleniyor...</div>
                     <div style="font-size:0.85rem; color:var(--text-gray); margin-top:8px;">Risk profilinize göre otomatik yönetiliyor.</div>
                 </div>
-
                 <div class="card">
                     <span class="label">PİYASA VOLATİLİTE RİSKİ</span>
                     <div style="display: flex; justify-content: space-between; margin-top:5px;">
@@ -467,7 +475,6 @@
                     </div>
                     <div class="risk-bar-bg"><div class="risk-bar-fill" id="risk-bar"></div></div>
                 </div>
-
                 <div class="card">
                     <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;">
                         <div style="text-align:left;"><span class="label">FİYAT</span><div id="price" style="font-weight:800; font-size:1.3rem;">---</div></div>
@@ -477,391 +484,106 @@
                     <div class="decision-box">
                         <div id="dec-title" style="font-weight:bold; font-size:1.1rem;">Bekleniyor</div>
                         <div id="dec-detail" style="font-size:0.9rem; color:var(--text-gray); margin-top:5px;">Sistem verileri işliyor...</div>
+                        <div style="margin-top:15px; font-size:0.75rem; color:#fff; font-weight:bold; letter-spacing:0.5px;">AI TARAFINDAN SEÇİLEN İNDİKATÖRLER:</div>
+                        <div id="ai-tags" class="tag-container"></div>
+                    </div>
+                    <div id="last-trade-box" style="margin-top:15px; display:none; border-top:1px solid var(--border); padding-top:10px;">
+                        <span class="label" style="color:var(--accent-cyan)">⚡ SON GERÇEK İŞLEM</span>
+                        <div id="last-trade-detail" style="font-size:0.85rem; margin-top:5px; color:#fff;"></div>
                     </div>
                 </div>
-
                 <div class="card" style="border: 1px solid var(--primary);">
                     <div class="report-header">
                         <div style="display:flex; align-items:center; gap:12px;">
                             <span style="font-size:1.5rem;">📊</span>
-                            <div>
-                                <span class="label" style="color:var(--primary); font-size:0.95rem;">ALPHA FON RAPORU</span>
-                                <span style="font-size:0.75rem; color:var(--text-gray);">Profesyonel Performans Analizi</span>
-                            </div>
+                            <div><span class="label" style="color:var(--primary); font-size:0.95rem;">ALPHA FON RAPORU</span><span style="font-size:0.75rem; color:var(--text-gray);">Profesyonel Performans Analizi</span></div>
                         </div>
                         <button onclick="runBacktest()" class="action-btn">RAPOR OLUŞTUR</button>
                     </div>
                     <div id="bt-status" style="font-size:0.9rem; color:var(--text-gray); text-align:center; padding:20px;">Geçmiş 30 günlük verilerle simülasyon başlatmak için butona basın.</div>
-
                     <div id="bt-results" style="display:none;">
                         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom:20px;">
-                            <div style="background:var(--bg-input); padding:15px; border-radius:8px; text-align:center; border:1px solid var(--border);">
-                                <span class="label">NET GETİRİ</span>
-                                <div id="bt-bot-res" style="font-size:1.6rem; font-weight:800; margin-top:5px;">---</div>
-                            </div>
-                            <div style="background:var(--bg-input); padding:15px; border-radius:8px; text-align:center; border:1px solid var(--border);">
-                                <span class="label">RAKİP (BENCHMARK)</span>
-                                <div id="bt-hodl-res" style="font-size:1.6rem; font-weight:800; color:var(--text-gray); margin-top:5px;">---</div>
-                            </div>
+                            <div style="background:var(--bg-input); padding:15px; border-radius:8px; text-align:center; border:1px solid var(--border);"><span class="label">NET GETİRİ</span><div id="bt-bot-res" style="font-size:1.6rem; font-weight:800; margin-top:5px;">---</div></div>
+                            <div style="background:var(--bg-input); padding:15px; border-radius:8px; text-align:center; border:1px solid var(--border);"><span class="label">RAKİP (BENCHMARK)</span><div id="bt-hodl-res" style="font-size:1.6rem; font-weight:800; color:var(--text-gray); margin-top:5px;">---</div></div>
                         </div>
                         <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px; margin-bottom:20px;">
                             <div style="text-align:center;"><span class="label">Sharpe</span><div id="bt-sharpe" style="font-weight:bold; color:#fff;">---</div></div>
                             <div style="text-align:center;"><span class="label">Max DD</span><div id="bt-dd" style="font-weight:bold; color:var(--red);">---</div></div>
                             <div style="text-align:center;"><span class="label">Profit F.</span><div id="bt-pf" style="font-weight:bold; color:var(--green);">---</div></div>
                         </div>
-                        <div style="background:rgba(255,255,255,0.03); padding:15px; border-radius:8px; font-size:0.85rem; border-left:3px solid var(--primary);">
-                            <span style="font-weight:bold; color:var(--primary);">YÖNETİCİ NOTU:</span>
-                            <div id="bt-comment" style="margin-top:5px; color:var(--text-gray); line-height:1.4;">---</div>
-                        </div>
-
-                        <div id="ai-advice" class="ai-advice-box">
-                            <span style="font-weight:bold; color:var(--red);">🧠 AI GELİŞTİRME ÖNERİSİ:</span>
-                            <div id="advice-text" style="margin-top:5px; color:#e1e1e1; font-size:0.85rem;"></div>
-                        </div>
-
+                        <div style="background:rgba(255,255,255,0.03); padding:15px; border-radius:8px; font-size:0.85rem; border-left:3px solid var(--primary);"><span style="font-weight:bold; color:var(--primary);">YÖNETİCİ NOTU:</span><div id="bt-comment" style="margin-top:5px; color:var(--text-gray); line-height:1.4;">---</div></div>
+                        <div id="ai-advice" class="ai-advice-box"><span style="font-weight:bold; color:var(--red);">🧠 AI GELİŞTİRME ÖNERİSİ:</span><div id="advice-text" style="margin-top:5px; color:#e1e1e1; font-size:0.85rem;"></div></div>
                         <div style="margin-top:20px;"><span class="label">SON İŞLEMLER</span><table style="margin-top:10px;"><tbody id="bt-trade-list"></tbody></table></div>
                     </div>
                 </div>
             </div>
-
-            <div style="min-height:850px; border-radius:12px; overflow:hidden; border:1px solid var(--border); background: var(--bg-card);">
-                <div id="tradingview_chart" style="height:100%;width:100%"></div>
-            </div>
+            <div style="min-height:850px; border-radius:12px; overflow:hidden; border:1px solid var(--border); background: var(--bg-card);"><div id="tradingview_chart" style="height:100%;width:100%"></div></div>
         </div>
     </div>
-
-    <div id="setup-warning" class="setup-warning">
-        <span>⚠️ Botun çalışması için <b>Risk Profilini</b> ve <b>API Anahtarlarını</b> tamamlamalısın.</span>
-        <button class="setup-btn" onclick="openProfileModal()">Ayarları Tamamla</button>
-    </div>
-
+    <div id="setup-warning" class="setup-warning"><span>⚠️ Botun çalışması için <b>Risk Profilini</b> ve <b>API Anahtarlarını</b> tamamlamalısın.</span><button class="setup-btn" onclick="openProfileModal()">Ayarları Tamamla</button></div>
     <div class="modal" id="authModal">
-        <div class="modal-content">
-            <div class="tab-header">
-                <div class="tab-item active" onclick="switchTab('login')">Giriş Yap</div>
-                <div class="tab-item" onclick="switchTab('register')">Kayıt Ol</div>
-            </div>
-            <div id="form-login">
-                <label class="label">Kullanıcı Adı</label><input type="text" class="inp" id="l-user">
-                <label class="label">Şifre</label><input type="password" class="inp" id="l-pass">
-                <button class="save-btn" onclick="doLogin()">GİRİŞ YAP</button>
-            </div>
-            <div id="form-register" class="hidden">
-                <label class="label">Kullanıcı Adı Belirle</label><input type="text" class="inp" id="r-user">
-                <label class="label">Şifre Belirle</label><input type="password" class="inp" id="r-pass">
-                <button class="save-btn" style="background:var(--primary); color:white;" onclick="doRegister()">KAYIT OL</button>
-            </div>
-            <button onclick="closeModal('authModal')" style="width:100%; background:transparent; border:none; color:var(--text-gray); margin-top:15px; cursor:pointer;">Kapat</button>
-        </div>
+        <div class="modal-content"><div class="tab-header"><div class="tab-item active" onclick="switchTab('login')">Giriş Yap</div><div class="tab-item" onclick="switchTab('register')">Kayıt Ol</div></div><div id="form-login"><label class="label">Kullanıcı Adı</label><input type="text" class="inp" id="l-user"><label class="label">Şifre</label><input type="password" class="inp" id="l-pass"><button class="save-btn" onclick="doLogin()">GİRİŞ YAP</button></div><div id="form-register" class="hidden"><label class="label">Kullanıcı Adı Belirle</label><input type="text" class="inp" id="r-user"><label class="label">Şifre Belirle</label><input type="password" class="inp" id="r-pass"><button class="save-btn" style="background:var(--primary); color:white;" onclick="doRegister()">KAYIT OL</button></div><button onclick="closeModal('authModal')" style="width:100%; background:transparent; border:none; color:var(--text-gray); margin-top:15px; cursor:pointer;">Kapat</button></div>
     </div>
-
     <div class="modal" id="profileModal">
         <div class="modal-content">
             <h3 style="margin-top:0; color:var(--primary); font-size:1.5rem; text-align:center;">👤 Hesap ve Risk Ayarları</h3>
-
-            <div class="wizard-box">
-                <div style="font-weight:bold; color:#fff; margin-bottom:15px; font-size:1.1rem;">🤖 Risk Profil Analizi</div>
-                <div class="question-row">
-                    <div><label class="label">1. Yaşınız</label><select class="sel" id="q-age"><option value="3">18 - 35 (Genç)</option><option value="2">36 - 55 (Orta)</option><option value="1">56+ (Emekli)</option></select></div>
-                    <div><label class="label">2. Cinsiyet</label><select class="sel" id="q-gender"><option value="0">Belirtilmedi</option><option value="0">Kadın</option><option value="0">Erkek</option></select></div>
-                </div>
-                <label class="label">3. Bu paraya ne zaman ihtiyacınız var?</label><select class="sel" id="q-source"><option value="3">İhtiyacım yok (Uzun Vade)</option><option value="2">Belki 6 ay sonra lazım</option><option value="1">Kira/Geçim parası (Kısa Vade)</option></select>
-                <label class="label">4. Tecrübeniz</label><select class="sel" id="q-exp"><option value="1">Yeni Başlayan</option><option value="2">Orta Seviye</option><option value="3">Uzman</option></select>
-                <label class="label">5. %20 Düşüşte Tepkiniz?</label><select class="sel" id="q-psych"><option value="1">Panikler satarım</option><option value="2">Beklerim</option><option value="3">Daha çok alırım</option></select>
-            </div>
-
-            <div class="section-title">🔗 Binance API</div>
-            <div class="password-wrapper">
-                <input type="password" class="inp" id="p-apikey" placeholder="API Key">
-                <div class="eye-btn" onclick="togglePW('p-apikey', this)">
-                    <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" /></svg>
-                </div>
-            </div>
-            <div class="password-wrapper">
-                <input type="password" class="inp" id="p-apisecret" placeholder="Secret Key">
-                <div class="eye-btn" onclick="togglePW('p-apisecret', this)">
-                    <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" /></svg>
-                </div>
-            </div>
-
-            <div class="section-title">🔔 Telegram Bildirimleri</div>
-            <input type="text" class="inp" id="p-token" placeholder="BotFather Token">
-            <input type="text" class="inp" id="p-chatid" placeholder="Chat ID">
-
-            <button class="save-btn" onclick="calculateAndSaveProfile()">AYARLARI KAYDET VE BAŞLA</button>
-            <button class="auth-btn" style="background:var(--red); color:white; width:100%; margin-top:15px; border:none;" onclick="doLogout()">Çıkış Yap</button>
-            <button onclick="closeModal('profileModal')" style="width:100%; background:transparent; border:none; color:var(--text-gray); margin-top:10px; cursor:pointer;">Kapat</button>
+            <div class="wizard-box"><div style="font-weight:bold; color:#fff; margin-bottom:15px; font-size:1.1rem;">🤖 Risk Profil Analizi</div><div class="question-row"><div><label class="label">1. Yaşınız</label><select class="sel" id="q-age"><option value="3">18 - 35 (Genç)</option><option value="2">36 - 55 (Orta)</option><option value="1">56+ (Emekli)</option></select></div><div><label class="label">2. Cinsiyet</label><select class="sel" id="q-gender"><option value="0">Belirtilmedi</option><option value="0">Kadın</option><option value="0">Erkek</option></select></div></div><label class="label">3. Bu paraya ne zaman ihtiyacınız var?</label><select class="sel" id="q-source"><option value="3">İhtiyacım yok (Uzun Vade)</option><option value="2">Belki 6 ay sonra lazım</option><option value="1">Kira/Geçim parası (Kısa Vade)</option></select><label class="label">4. Tecrübeniz</label><select class="sel" id="q-exp"><option value="1">Yeni Başlayan</option><option value="2">Orta Seviye</option><option value="3">Uzman</option></select><label class="label">5. %20 Düşüşte Tepkiniz?</label><select class="sel" id="q-psych"><option value="1">Panikler satarım</option><option value="2">Beklerim</option><option value="3">Daha çok alırım</option></select></div>
+            <div class="section-title">🔗 Binance API</div><div class="password-wrapper"><input type="password" class="inp" id="p-apikey" placeholder="API Key"><div class="eye-btn" onclick="togglePW('p-apikey', this)"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" /></svg></div></div><div class="password-wrapper"><input type="password" class="inp" id="p-apisecret" placeholder="Secret Key"><div class="eye-btn" onclick="togglePW('p-apisecret', this)"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" /></svg></div></div>
+            <div class="section-title">🔔 Telegram Bildirimleri</div><input type="text" class="inp" id="p-token" placeholder="BotFather Token"><input type="text" class="inp" id="p-chatid" placeholder="Chat ID">
+            <button class="save-btn" onclick="calculateAndSaveProfile()">AYARLARI KAYDET VE BAŞLA</button><button class="auth-btn" style="background:var(--red); color:white; width:100%; margin-top:15px; border:none;" onclick="doLogout()">Çıkış Yap</button><button onclick="closeModal('profileModal')" style="width:100%; background:transparent; border:none; color:var(--text-gray); margin-top:10px; cursor:pointer;">Kapat</button>
         </div>
     </div>
-
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <script>
-        let currentUser = null;
-        let currentSymbol = "BTCUSDT";
-        let countdown = 10;
+        let currentUser = null; let currentSymbol = "BTCUSDT";
+        // SENKRONİZE ZAMANLAYICI AYARLARI
+        const UPDATE_INTERVAL = 10;
+        let countdown = UPDATE_INTERVAL;
 
-        function changeSymbol(newVal) {
-            if (!newVal) return;
-            newVal = newVal.toUpperCase();
-            currentSymbol = newVal;
-            document.getElementById('header-symbol').value = newVal;
-            loadChart(newVal);
-            if (currentUser) {
-                let settings = JSON.parse(localStorage.getItem("crypto_settings") || "{}");
-                settings.symbol = newVal;
-                saveDataToBackend(settings, false);
-            } else {
-                fetch('/auth/save-data', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: "guest", settings: { symbol: newVal } }) }).catch(() => { });
-            }
-        }
+        function changeSymbol(newVal) { if (!newVal) return; newVal = newVal.toUpperCase(); currentSymbol = newVal; document.getElementById('header-symbol').value = newVal; loadChart(newVal); if (currentUser) { let settings = JSON.parse(localStorage.getItem("crypto_settings") || "{}"); settings.symbol = newVal; saveDataToBackend(settings, false); } }
+        function switchTab(tab) { if (tab === 'login') { document.getElementById('form-login').classList.remove('hidden'); document.getElementById('form-register').classList.add('hidden'); document.querySelectorAll('.tab-item')[0].classList.add('active'); document.querySelectorAll('.tab-item')[1].classList.remove('active'); } else { document.getElementById('form-login').classList.add('hidden'); document.getElementById('form-register').classList.remove('hidden'); document.querySelectorAll('.tab-item')[0].classList.remove('active'); document.querySelectorAll('.tab-item')[1].classList.add('active'); } }
+        async function doRegister() { const u = document.getElementById('r-user').value; const p = document.getElementById('r-pass').value; if (!u || !p) return alert("Alanları doldurun!"); const res = await fetch('/auth/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: u, password: p }) }); const data = await res.json(); alert(data.mesaj); if (res.ok) switchTab('login'); }
+        async function doLogin() { const u = document.getElementById('l-user').value; const p = document.getElementById('l-pass').value; const res = await fetch('/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: u, password: p }) }); const data = await res.json(); if (!res.ok) return alert(data.mesaj); localStorage.setItem("crypto_user", u); localStorage.setItem("crypto_settings", JSON.stringify(data.settings)); currentUser = u; closeModal('authModal'); checkLoginState(); alert("Giriş yapıldı!"); location.reload(); }
+        function doLogout() { localStorage.removeItem("crypto_user"); localStorage.removeItem("crypto_settings"); localStorage.removeItem("crypto_prefs"); currentUser = null; closeModal('profileModal'); window.location.href = "/"; }
+        function checkLoginState() { const u = localStorage.getItem("crypto_user"); const btn = document.getElementById('auth-btn'); if (u) { currentUser = u; btn.innerText = `👤 Hesabım (${u})`; btn.classList.add('logged-in-btn'); btn.onclick = () => openProfileModal(); const settings = JSON.parse(localStorage.getItem("crypto_settings") || "{}"); if (settings.symbol) { currentSymbol = settings.symbol; document.getElementById('header-symbol').value = currentSymbol; } if (!settings.risk_profile || !settings.api_key) { document.getElementById('setup-warning').style.display = 'flex'; } else { document.getElementById('setup-warning').style.display = 'none'; } } else { btn.innerText = "Giriş / Kayıt"; btn.classList.remove('logged-in-btn'); btn.onclick = () => openAuthModal(); document.getElementById('setup-warning').style.display = 'none'; } }
+        function openProfileModal() { const settings = JSON.parse(localStorage.getItem("crypto_settings") || "{}"); const prefs = JSON.parse(localStorage.getItem("crypto_prefs") || "{}"); document.getElementById('p-apikey').value = settings.api_key || ""; document.getElementById('p-apisecret').value = settings.api_secret || ""; document.getElementById('p-token').value = settings.telegram_token || ""; document.getElementById('p-chatid').value = settings.telegram_chat_id || ""; if (prefs.age) document.getElementById('q-age').value = prefs.age; if (prefs.gender) document.getElementById('q-gender').value = prefs.gender; if (prefs.source) document.getElementById('q-source').value = prefs.source; if (prefs.exp) document.getElementById('q-exp').value = prefs.exp; if (prefs.psych) document.getElementById('q-psych').value = prefs.psych; document.getElementById('profileModal').style.display = 'flex'; }
+        function togglePW(id, btn) { const el = document.getElementById(id); const isPassword = el.type === "password"; el.type = isPassword ? "text" : "password"; if (isPassword) { btn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>'; btn.style.fill = "#f6465d"; } else { btn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>'; btn.style.fill = "#848e9c"; } }
+        async function calculateAndSaveProfile() { const age = document.getElementById('q-age').value; const gender = document.getElementById('q-gender').value; const source = document.getElementById('q-source').value; const exp = document.getElementById('q-exp').value; const psych = document.getElementById('q-psych').value; const totalScore = parseInt(age) + parseInt(source) + parseInt(exp) + parseInt(psych); let riskProfile = "LOW_RISK"; if (totalScore <= 6) riskProfile = "LOW_RISK"; else if (totalScore <= 9) riskProfile = "MEDIUM_RISK"; else riskProfile = "HIGH_RISK"; if (!confirm(`📊 Puan: ${totalScore}/12 -> Strateji "${riskProfile}" olacak. Onaylıyor musunuz?`)) return; const settings = { symbol: document.getElementById('header-symbol').value.toUpperCase(), api_key: document.getElementById('p-apikey').value, api_secret: document.getElementById('p-apisecret').value, telegram_token: document.getElementById('p-token').value, telegram_chat_id: document.getElementById('p-chatid').value, risk_profile: riskProfile }; localStorage.setItem("crypto_settings", JSON.stringify(settings)); localStorage.setItem("crypto_prefs", JSON.stringify({ age, gender, source, exp, psych })); await saveDataToBackend(settings, false); await fetch('/strateji-degistir', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ yeni_strateji: riskProfile }) }); closeModal('profileModal'); document.getElementById('active-strat-display').innerText = riskProfile; document.getElementById('setup-warning').style.display = 'none'; updateData(); alert("Profil ve Strateji Güncellendi!"); }
+        async function saveDataToBackend(settings, showAlert) { if (!currentUser) return; const res = await fetch('/auth/save-data', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: currentUser, settings: settings }) }); if (res.ok && showAlert) alert("Kayıt Başarılı"); }
+        function openAuthModal() { document.getElementById('authModal').style.display = 'flex'; } function closeModal(id) { document.getElementById(id).style.display = 'none'; } function updateClock() { document.getElementById('clock').innerText = new Date().toLocaleTimeString('tr-TR').substring(0, 5); }
 
-        function switchTab(tab) {
-            if (tab === 'login') {
-                document.getElementById('form-login').classList.remove('hidden'); document.getElementById('form-register').classList.add('hidden');
-                document.querySelectorAll('.tab-item')[0].classList.add('active'); document.querySelectorAll('.tab-item')[1].classList.remove('active');
-            } else {
-                document.getElementById('form-login').classList.add('hidden'); document.getElementById('form-register').classList.remove('hidden');
-                document.querySelectorAll('.tab-item')[0].classList.remove('active'); document.querySelectorAll('.tab-item')[1].classList.add('active');
-            }
-        }
-
-        async function doRegister() {
-            const u = document.getElementById('r-user').value; const p = document.getElementById('r-pass').value;
-            if (!u || !p) return alert("Alanları doldurun!");
-            const res = await fetch('/auth/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: u, password: p }) });
-            const data = await res.json();
-            alert(data.mesaj); if (res.ok) switchTab('login');
-        }
-
-        async function doLogin() {
-            const u = document.getElementById('l-user').value; const p = document.getElementById('l-pass').value;
-            const res = await fetch('/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: u, password: p }) });
-            const data = await res.json();
-            if (!res.ok) return alert(data.mesaj);
-            localStorage.setItem("crypto_user", u); localStorage.setItem("crypto_settings", JSON.stringify(data.settings));
-            currentUser = u; closeModal('authModal'); checkLoginState(); alert("Giriş yapıldı!"); location.reload();
-        }
-
-        function doLogout() {
-            localStorage.removeItem("crypto_user"); localStorage.removeItem("crypto_settings"); localStorage.removeItem("crypto_prefs");
-            currentUser = null; closeModal('profileModal'); window.location.href = "/";
-        }
-
-        function checkLoginState() {
-            const u = localStorage.getItem("crypto_user");
-            const btn = document.getElementById('auth-btn');
-            if (u) {
-                currentUser = u; btn.innerText = `👤 Hesabım (${u})`; btn.classList.add('logged-in-btn');
-                btn.onclick = () => openProfileModal();
-                const settings = JSON.parse(localStorage.getItem("crypto_settings") || "{}");
-                if (settings.symbol) { currentSymbol = settings.symbol; document.getElementById('header-symbol').value = currentSymbol; }
-
-                // EKSİK AYAR KONTROLÜ (YENİ)
-                if (!settings.risk_profile || !settings.api_key) {
-                    document.getElementById('setup-warning').style.display = 'flex';
-                } else {
-                    document.getElementById('setup-warning').style.display = 'none';
-                }
-            } else {
-                btn.innerText = "Giriş / Kayıt"; btn.classList.remove('logged-in-btn'); btn.onclick = () => openAuthModal();
-                document.getElementById('setup-warning').style.display = 'none';
-            }
-        }
-
-        function openProfileModal() {
-            const settings = JSON.parse(localStorage.getItem("crypto_settings") || "{}");
-            const prefs = JSON.parse(localStorage.getItem("crypto_prefs") || "{}");
-            document.getElementById('p-apikey').value = settings.api_key || "";
-            document.getElementById('p-apisecret').value = settings.api_secret || "";
-            document.getElementById('p-token').value = settings.telegram_token || "";
-            document.getElementById('p-chatid').value = settings.telegram_chat_id || "";
-            if (prefs.age) document.getElementById('q-age').value = prefs.age;
-            if (prefs.gender) document.getElementById('q-gender').value = prefs.gender;
-            if (prefs.source) document.getElementById('q-source').value = prefs.source;
-            if (prefs.exp) document.getElementById('q-exp').value = prefs.exp;
-            if (prefs.psych) document.getElementById('q-psych').value = prefs.psych;
-            document.getElementById('profileModal').style.display = 'flex';
-        }
-
-        function togglePW(id, btn) {
-            const el = document.getElementById(id);
-            const isPassword = el.type === "password";
-            el.type = isPassword ? "text" : "password";
-            if (isPassword) {
-                btn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>';
-                btn.style.fill = "#f6465d";
-            } else {
-                btn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>';
-                btn.style.fill = "#848e9c";
-            }
-        }
-
-        async function calculateAndSaveProfile() {
-            const age = document.getElementById('q-age').value;
-            const gender = document.getElementById('q-gender').value;
-            const source = document.getElementById('q-source').value;
-            const exp = document.getElementById('q-exp').value;
-            const psych = document.getElementById('q-psych').value;
-            const totalScore = parseInt(age) + parseInt(source) + parseInt(exp) + parseInt(psych);
-            let riskProfile = "LOW_RISK";
-            if (totalScore <= 6) riskProfile = "LOW_RISK";
-            else if (totalScore <= 9) riskProfile = "MEDIUM_RISK";
-            else riskProfile = "HIGH_RISK";
-
-            if (!confirm(`📊 Puan: ${totalScore}/12 -> Strateji "${riskProfile}" olacak. Onaylıyor musunuz?`)) return;
-
-            const settings = {
-                symbol: document.getElementById('header-symbol').value.toUpperCase(),
-                api_key: document.getElementById('p-apikey').value,
-                api_secret: document.getElementById('p-apisecret').value,
-                telegram_token: document.getElementById('p-token').value,
-                telegram_chat_id: document.getElementById('p-chatid').value,
-                risk_profile: riskProfile
-            };
-
-            localStorage.setItem("crypto_settings", JSON.stringify(settings));
-            localStorage.setItem("crypto_prefs", JSON.stringify({ age, gender, source, exp, psych }));
-
-            await saveDataToBackend(settings, false);
-            await fetch('/strateji-degistir', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ yeni_strateji: riskProfile }) });
-            closeModal('profileModal');
-            document.getElementById('active-strat-display').innerText = riskProfile;
-
-            // Uyarıyı Gizle
-            document.getElementById('setup-warning').style.display = 'none';
-
-            updateData();
-            alert("Profil ve Strateji Güncellendi!");
-        }
-
-        async function saveDataToBackend(settings, showAlert) {
-            if (!currentUser) return;
-            const res = await fetch('/auth/save-data', {
-                method: 'POST', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username: currentUser, settings: settings })
-            });
-            if (res.ok && showAlert) alert("Kayıt Başarılı");
-        }
-
-        function openAuthModal() { document.getElementById('authModal').style.display = 'flex'; }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-        function updateClock() { document.getElementById('clock').innerText = new Date().toLocaleTimeString('tr-TR').substring(0, 5); }
-        setInterval(updateClock, 1000);
-        setInterval(() => { countdown--; if (countdown < 0) countdown = 10; document.getElementById('countdown-display').innerText = countdown + "s"; }, 1000);
-
-        function loadChart(symbol) {
-            document.getElementById('tradingview_chart').innerHTML = "";
-            new TradingView.widget({ "autosize": true, "symbol": "BINANCE:" + symbol, "interval": "60", "timezone": "Etc/UTC", "theme": "dark", "style": "1", "locale": "tr", "toolbar_bg": "#f1f3f6", "enable_publishing": false, "container_id": "tradingview_chart" });
-        }
-
+        function loadChart(symbol) { document.getElementById('tradingview_chart').innerHTML = ""; new TradingView.widget({ "autosize": true, "symbol": "BINANCE:" + symbol, "interval": "60", "timezone": "Etc/UTC", "theme": "dark", "style": "1", "locale": "tr", "toolbar_bg": "#f1f3f6", "enable_publishing": false, "container_id": "tradingview_chart" }); }
         async function updateData() {
             try {
-                const res = await fetch('/durum-oku');
-                const data = await res.json();
-
-                document.getElementById('price').innerText = `$${data.analiz.fiyat.toFixed(2)}`;
-                document.getElementById('bal-usdt').innerText = `$${data.bakiye_usdt.toFixed(2)}`;
-                document.getElementById('crypto-amount').innerText = data.eldeki_kripto.toFixed(4);
-                const coinName = data.ayarlar.symbol.replace('USDT', '');
-                document.getElementById('label-crypto').innerText = `${coinName} VARLIK`;
-
-                document.getElementById('active-strat-display').innerText = data.strateji.kod;
-
-                const risk = data.risk;
-                document.getElementById('risk-level').innerText = risk.seviye;
-                document.getElementById('risk-score').innerText = `${risk.puan}/10`;
-                document.getElementById('risk-bar').style.width = `${risk.puan * 10}%`;
-
-                const decEl = document.getElementById('dec-title');
-                document.getElementById('dec-detail').innerHTML = data.analiz.detay;
-                decEl.innerText = data.analiz.karar;
-                if (data.analiz.karar.includes("ALIM")) decEl.style.color = "var(--green)";
-                else if (data.analiz.karar.includes("SATIŞ")) decEl.style.color = "var(--red)";
-                else decEl.style.color = "var(--text-gray)";
-
-                if (data.ayarlar.symbol !== currentSymbol) {
-                    currentSymbol = data.ayarlar.symbol;
-                    document.getElementById('header-symbol').value = currentSymbol;
-                    loadChart(currentSymbol);
+                const res = await fetch('/durum-oku'); const data = await res.json(); document.getElementById('price').innerText = `$${data.analiz.fiyat.toFixed(2)}`; document.getElementById('bal-usdt').innerText = `$${data.bakiye_usdt.toFixed(2)}`; document.getElementById('crypto-amount').innerText = data.eldeki_kripto.toFixed(4); const coinName = data.ayarlar.symbol.replace('USDT', ''); document.getElementById('label-crypto').innerText = `${coinName} VARLIK`; document.getElementById('active-strat-display').innerText = data.strateji.kod; const risk = data.risk; document.getElementById('risk-level').innerText = risk.seviye; document.getElementById('risk-score').innerText = `${risk.puan}/10`; document.getElementById('risk-bar').style.width = `${risk.puan * 10}%`;
+                const decEl = document.getElementById('dec-title'); document.getElementById('dec-detail').innerHTML = data.analiz.detay; decEl.innerText = data.analiz.karar; if (data.analiz.karar.includes("AL")) decEl.style.color = "var(--green)"; else if (data.analiz.karar.includes("SAT")) decEl.style.color = "var(--red)"; else decEl.style.color = "var(--text-gray)";
+                const tagBox = document.getElementById('ai-tags'); tagBox.innerHTML = ""; if (data.analiz.secilenler && data.analiz.secilenler.length > 0) { data.analiz.secilenler.forEach(tag => { tagBox.innerHTML += `<span class="ai-tag">✨ ${tag}</span>`; }); } else { tagBox.innerHTML = `<span style="color:#555; font-size:0.7rem;">Analiz ediliyor...</span>`; }
+                // Gerçek İşlem Göstergesi
+                if (data.analiz.son_islem) {
+                    document.getElementById('last-trade-box').style.display = 'block';
+                    document.getElementById('last-trade-detail').innerText = data.analiz.son_islem;
                 }
+                if (data.ayarlar.symbol !== currentSymbol) { currentSymbol = data.ayarlar.symbol; document.getElementById('header-symbol').value = currentSymbol; loadChart(currentSymbol); }
             } catch (e) { console.error(e); }
         }
+        async function runBacktest() { const statusEl = document.getElementById('bt-status'); const resDiv = document.getElementById('bt-results'); const adviceBox = document.getElementById('ai-advice'); if (statusEl) { statusEl.style.display = 'block'; statusEl.innerHTML = "⏳ <span style='color:var(--primary)'>Algoritma<br>Başlıyor...</span>"; } if (resDiv) resDiv.style.display = 'none'; try { const response = await fetch('/backtest-yap', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ gun_sayisi: 30 }) }); if (!response.ok) throw new Error("Sunucu Hatası"); const data = await response.json(); if (data.mesaj) throw new Error(data.mesaj); if (statusEl) statusEl.style.display = 'none'; if (resDiv) resDiv.style.display = 'block'; document.getElementById('bt-bot-res').innerText = `%${data.bot_return_pct.toFixed(2)}`; const botEl = document.getElementById('bt-bot-res'); botEl.style.color = data.bot_return_pct >= 0 ? 'var(--green)' : 'var(--red)'; document.getElementById('bt-hodl-res').innerText = `%${data.hodl_return_pct.toFixed(2)}`; document.getElementById('bt-sharpe').innerText = data.sharpe_ratio || "N/A"; document.getElementById('bt-dd').innerText = `%${(data.max_drawdown || 0).toFixed(2)}`; document.getElementById('bt-pf').innerText = data.profit_factor || "N/A"; let comment = ""; if (Math.abs(data.max_drawdown) < Math.abs(data.market_drawdown)) comment += `✅ Bot düşüşleri rakipten iyi yönetti. `; else comment += `⚠️ Bot rakipten fazla düştü. `; if (data.bot_return_pct > data.hodl_return_pct) comment += `<br>🚀 <b>KAZANAN:</b> Yapay Zeka, klasik stratejisini yendi!`; else comment += `<br>🐢 <b>KAZANAN:</b> Klasik strateji bu sefer daha iyiydi.`; document.getElementById('bt-comment').innerHTML = comment; if (data.bot_return_pct < data.hodl_return_pct && data.ai_suggestion) { adviceBox.style.display = 'block'; document.getElementById('advice-text').innerHTML = data.ai_suggestion; } else { adviceBox.style.display = 'none'; } const tableBody = document.getElementById('bt-trade-list'); if (tableBody) { tableBody.innerHTML = ""; if (data.trades_log && data.trades_log.length > 0) { [...data.trades_log].reverse().forEach(trade => { let pnlColor = 'var(--text-white)'; let pnlText = ''; if (trade.type === 'SAT') { const pnl = trade.profit || 0; pnlColor = pnl >= 0 ? 'var(--green)' : 'var(--red)'; pnlText = `(%${pnl.toFixed(2)})`; } tableBody.innerHTML += `<tr><td style="color:${trade.type === 'AL' ? 'var(--green)' : 'var(--red)'}; font-weight:bold;">${trade.type}</td><td>$${trade.price.toFixed(0)} <span style="font-size:0.7em; color:${pnlColor}; margin-left:3px;">${pnlText}</span></td><td style="color:#848e9c;">${trade.time.split(' ')[0]}</td></tr>`; }); } else tableBody.innerHTML = "<tr><td colspan='3' style='padding:10px; text-align:center;'>İşlem yok.</td></tr>"; } } catch (error) { if (statusEl) statusEl.innerHTML = "Hata: " + error.message; } }
 
-        async function runBacktest() {
-            const statusEl = document.getElementById('bt-status');
-            const resDiv = document.getElementById('bt-results');
-            const adviceBox = document.getElementById('ai-advice');
+        // --- MASTER LOOP (SENKRONİZE DÖNGÜ) ---
+        function startMasterLoop() {
+            updateData(); // İlk açılış
+            setInterval(() => {
+                countdown--;
+                const display = document.getElementById('countdown-display');
+                if (display) display.innerText = countdown + "s";
 
-            if (statusEl) { statusEl.style.display = 'block'; statusEl.innerHTML = "⏳ <span style='color:var(--primary)'>Yapay Zeka vs. Klasik Strateji<br>Yarışı Başlıyor...</span>"; }
-            if (resDiv) resDiv.style.display = 'none';
-
-            try {
-                const response = await fetch('/backtest-yap', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ gun_sayisi: 30 }) });
-                if (!response.ok) throw new Error("Sunucu Hatası");
-                const data = await response.json();
-                if (data.mesaj) throw new Error(data.mesaj);
-                if (data.error) throw new Error(data.error);
-
-                if (statusEl) statusEl.style.display = 'none';
-                if (resDiv) resDiv.style.display = 'block';
-
-                document.getElementById('bt-bot-res').innerText = `%${data.bot_return_pct.toFixed(2)}`;
-                const botEl = document.getElementById('bt-bot-res');
-                botEl.style.color = data.bot_return_pct >= 0 ? 'var(--green)' : 'var(--red)';
-
-                document.getElementById('bt-hodl-res').innerText = `%${data.hodl_return_pct.toFixed(2)}`;
-                const hodlLabel = document.querySelector('#bt-hodl-res').previousElementSibling;
-                if (hodlLabel && data.benchmark_label) hodlLabel.innerText = data.benchmark_label.toUpperCase();
-
-                document.getElementById('bt-sharpe').innerText = data.sharpe_ratio;
-                document.getElementById('bt-dd').innerText = `%${data.max_drawdown.toFixed(2)}`;
-                document.getElementById('bt-pf').innerText = data.profit_factor;
-
-                let comment = "";
-                if (Math.abs(data.max_drawdown) < Math.abs(data.market_drawdown)) comment += `✅ Bot düşüşleri rakipten iyi yönetti. `;
-                else comment += `⚠️ Bot rakipten fazla düştü. `;
-
-                if (data.bot_return_pct > data.hodl_return_pct) comment += `<br>🚀 <b>KAZANAN:</b> Yapay Zeka, klasik "${data.benchmark_label}" stratejisini yendi!`;
-                else comment += `<br>🐢 <b>KAZANAN:</b> Klasik "${data.benchmark_label}" stratejisi bu sefer daha iyiydi.`;
-                document.getElementById('bt-comment').innerHTML = comment;
-
-                // AI TAVSİYE KUTUSU
-                if (data.bot_return_pct < data.hodl_return_pct && data.ai_suggestion) {
-                    adviceBox.style.display = 'block';
-                    document.getElementById('advice-text').innerHTML = data.ai_suggestion;
-                } else {
-                    adviceBox.style.display = 'none';
+                if (countdown <= 0) {
+                    updateData(); // Veri Çek & İşlem Yap
+                    countdown = UPDATE_INTERVAL; // Başa sar
                 }
-
-                const tableBody = document.getElementById('bt-trade-list');
-                if (tableBody) {
-                    tableBody.innerHTML = "";
-                    if (data.trades_log && data.trades_log.length > 0) {
-                        [...data.trades_log].reverse().forEach(trade => {
-                            let pnlColor = 'var(--text-white)';
-                            let pnlText = '';
-                            if (trade.type === 'SAT') {
-                                const pnl = trade.profit || 0;
-                                pnlColor = pnl >= 0 ? 'var(--green)' : 'var(--red)';
-                                pnlText = `(%${pnl.toFixed(2)})`;
-                            }
-
-                            tableBody.innerHTML += `
-                                <tr>
-                                    <td style="color:${trade.type === 'AL' ? 'var(--green)' : 'var(--red)'}; font-weight:bold;">${trade.type}</td>
-                                    <td>
-                                        $${trade.price.toFixed(0)}
-                                        <span style="font-size:0.7em; color:${pnlColor}; margin-left:3px;">${pnlText}</span>
-                                    </td>
-                                    <td style="color:#848e9c;">${trade.time.split(' ')[0]}</td>
-                                </tr>`;
-                        });
-                    } else tableBody.innerHTML = "<tr><td colspan='3' style='padding:10px; text-align:center;'>İşlem yok.</td></tr>";
-                }
-            } catch (error) { if (statusEl) statusEl.innerHTML = "Hata: " + error.message; }
+            }, 1000);
         }
 
-        checkLoginState(); loadChart(currentSymbol); updateClock(); setInterval(updateData, 2000);
+        checkLoginState(); loadChart(currentSymbol); updateClock(); startMasterLoop();
     </script>
 </body>
 </html>
