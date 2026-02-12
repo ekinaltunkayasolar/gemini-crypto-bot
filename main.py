@@ -35,11 +35,15 @@ class UserLogin(BaseModel):
 def get_wallet_balance(api_key, api_secret, symbol):
     if not api_key or not api_secret: return 0.0, 0.0
     try:
-        exchange = ccxt.binance({
-            'apiKey': api_key, 'secret': api_secret,
-            'options': {'defaultType': 'spot', 'adjustForTimeDifference': True}
+    exchange = ccxt.binance({
+    'apiKey': api_key,
+    'secret': api_secret,
+    'enableRateLimit': True,
+    'options': {
+        'defaultType': 'spot',  # Spot piyasada işlem yapacağız
+        'adjustForTimeDifference': True, # Saat farkı hatasını önler
         })
-        exchange.set_sandbox_mode(True) # Testnet
+       
         
         balance = exchange.fetch_balance()
         base = symbol.split('/')[0] if "/" in symbol else "BTC"
